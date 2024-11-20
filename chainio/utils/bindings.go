@@ -94,7 +94,7 @@ type AvsRegistryContractBindings struct {
 	IndexRegistryAddr          gethcommon.Address
 	// contract bindings
 	ServiceManager         *servicemanager.ContractServiceManagerBase
-	RegistryCoordinator    *regcoordinator.ContractRegistryCoordinator
+	RegistryCoordinator    *regcoordinator.ContractZrRegistryCoordinator
 	StakeRegistry          *stakeregistry.ContractStakeRegistry
 	BlsApkRegistry         *blsapkregistry.ContractBLSApkRegistry
 	IndexRegistry          *indexregistry.ContractIndexRegistry
@@ -107,7 +107,7 @@ func NewAVSRegistryContractBindings(
 	ethclient eth.Client,
 	logger logging.Logger,
 ) (*AvsRegistryContractBindings, error) {
-	contractBlsRegistryCoordinator, err := regcoordinator.NewContractRegistryCoordinator(
+	contractBlsRegistryCoordinator, err := regcoordinator.NewContractZrRegistryCoordinator(
 		registryCoordinatorAddr,
 		ethclient,
 	)

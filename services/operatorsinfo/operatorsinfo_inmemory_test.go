@@ -96,8 +96,8 @@ func TestGetOperatorPubkeys(t *testing.T) {
 					Raw:      gethtypes.Log{},
 				}
 				pubkeyRegistrationEventC <- pubkeyRegistrationEvent
-				operatorSocketUpdateEventC := make(chan *regcoordbindings.ContractRegistryCoordinatorOperatorSocketUpdate, 1)
-				operatorSocketUpdateEvent := &regcoordbindings.ContractRegistryCoordinatorOperatorSocketUpdate{
+				operatorSocketUpdateEventC := make(chan *regcoordbindings.ContractZrRegistryCoordinatorOperatorSocketUpdate, 1)
+				operatorSocketUpdateEvent := &regcoordbindings.ContractZrRegistryCoordinatorOperatorSocketUpdate{
 					OperatorId: types.OperatorIdFromG1Pubkey(testOperator1.operatorInfo.Pubkeys.G1Pubkey),
 					Socket:     string(testOperator1.operatorInfo.Socket),
 					Raw:        gethtypes.Log{},

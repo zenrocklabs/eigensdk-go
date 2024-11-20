@@ -58,10 +58,10 @@ func (mr *MockAvsRegistrySubscriberMockRecorder) SubscribeToNewPubkeyRegistratio
 }
 
 // SubscribeToOperatorSocketUpdates mocks base method.
-func (m *MockAvsRegistrySubscriber) SubscribeToOperatorSocketUpdates() (chan *contractRegistryCoordinator.ContractRegistryCoordinatorOperatorSocketUpdate, event.Subscription, error) {
+func (m *MockAvsRegistrySubscriber) SubscribeToOperatorSocketUpdates() (chan *contractRegistryCoordinator.ContractZrRegistryCoordinatorOperatorSocketUpdate, event.Subscription, error) {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "SubscribeToOperatorSocketUpdates")
-	ret0, _ := ret[0].(chan *contractRegistryCoordinator.ContractRegistryCoordinatorOperatorSocketUpdate)
+	ret0, _ := ret[0].(chan *contractRegistryCoordinator.ContractZrRegistryCoordinatorOperatorSocketUpdate)
 	ret1, _ := ret[1].(event.Subscription)
 	ret2, _ := ret[2].(error)
 	return ret0, ret1, ret2

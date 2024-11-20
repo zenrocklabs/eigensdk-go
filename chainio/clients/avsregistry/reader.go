@@ -86,7 +86,7 @@ type AvsRegistryChainReader struct {
 	logger                  logging.Logger
 	blsApkRegistryAddr      gethcommon.Address
 	registryCoordinatorAddr gethcommon.Address
-	registryCoordinator     *regcoord.ContractRegistryCoordinator
+	registryCoordinator     *regcoord.ContractZrRegistryCoordinator
 	operatorStateRetriever  *opstateretriever.ContractOperatorStateRetriever
 	stakeRegistry           *stakeregistry.ContractStakeRegistry
 	ethClient               eth.Client
@@ -98,7 +98,7 @@ var _ AvsRegistryReader = (*AvsRegistryChainReader)(nil)
 func NewAvsRegistryChainReader(
 	registryCoordinatorAddr gethcommon.Address,
 	blsApkRegistryAddr gethcommon.Address,
-	registryCoordinator *regcoord.ContractRegistryCoordinator,
+	registryCoordinator *regcoord.ContractZrRegistryCoordinator,
 	operatorStateRetriever *opstateretriever.ContractOperatorStateRetriever,
 	stakeRegistry *stakeregistry.ContractStakeRegistry,
 	logger logging.Logger,
@@ -121,7 +121,7 @@ func BuildAvsRegistryChainReader(
 	ethClient eth.Client,
 	logger logging.Logger,
 ) (*AvsRegistryChainReader, error) {
-	contractRegistryCoordinator, err := regcoord.NewContractRegistryCoordinator(registryCoordinatorAddr, ethClient)
+	contractRegistryCoordinator, err := regcoord.NewContractZrRegistryCoordinator(registryCoordinatorAddr, ethClient)
 	if err != nil {
 		return nil, types.WrapError(errors.New("Failed to create contractRegistryCoordinator"), err)
 	}

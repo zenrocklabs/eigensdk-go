@@ -111,7 +111,7 @@ func getRegCoordAndServiceMngrAddr(
 	registryCoordinatorAddrString := c.String(RegistryCoordinatorAddrFlag.Name)
 	if registryCoordinatorAddrString != "" {
 		registryCoordinatorAddr := common.HexToAddress(registryCoordinatorAddrString)
-		registryCoordinatorC, err := regcoord.NewContractRegistryCoordinator(
+		registryCoordinatorC, err := regcoord.NewContractZrRegistryCoordinator(
 			registryCoordinatorAddr,
 			client,
 		)
@@ -152,7 +152,7 @@ func getRegCoordAndServiceMngrAddr(
 }
 
 func getAvsContractAddrs(client *ethclient.Client, registryCoordinatorAddr common.Address) (map[string]string, error) {
-	blsRegistryCoordinatorWithIndicesC, err := regcoord.NewContractRegistryCoordinator(
+	blsRegistryCoordinatorWithIndicesC, err := regcoord.NewContractZrRegistryCoordinator(
 		registryCoordinatorAddr,
 		client,
 	)

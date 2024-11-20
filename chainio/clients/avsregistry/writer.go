@@ -39,6 +39,7 @@ type AvsRegistryWriter interface {
 		operatorToAvsRegistrationSigSalt [32]byte,
 		operatorToAvsRegistrationSigExpiry *big.Int,
 		blsKeyPair *bls.KeyPair,
+		validatorAddr string,
 		quorumNumbers types.QuorumNums,
 		socket string,
 	) (*gethtypes.Receipt, error)
@@ -72,7 +73,7 @@ type AvsRegistryWriter interface {
 
 type AvsRegistryChainWriter struct {
 	serviceManagerAddr     gethcommon.Address
-	registryCoordinator    *regcoord.ContractRegistryCoordinator
+	registryCoordinator    *regcoord.ContractZrRegistryCoordinator
 	operatorStateRetriever *opstateretriever.ContractOperatorStateRetriever
 	stakeRegistry          *stakeregistry.ContractStakeRegistry
 	blsApkRegistry         *blsapkregistry.ContractBLSApkRegistry
@@ -86,7 +87,7 @@ var _ AvsRegistryWriter = (*AvsRegistryChainWriter)(nil)
 
 func NewAvsRegistryChainWriter(
 	serviceManagerAddr gethcommon.Address,
-	registryCoordinator *regcoord.ContractRegistryCoordinator,
+	registryCoordinator *regcoord.ContractZrRegistryCoordinator,
 	operatorStateRetriever *opstateretriever.ContractOperatorStateRetriever,
 	stakeRegistry *stakeregistry.ContractStakeRegistry,
 	blsApkRegistry *blsapkregistry.ContractBLSApkRegistry,
@@ -115,7 +116,7 @@ func BuildAvsRegistryChainWriter(
 	ethClient eth.Client,
 	txMgr txmgr.TxManager,
 ) (*AvsRegistryChainWriter, error) {
-	registryCoordinator, err := regcoord.NewContractRegistryCoordinator(registryCoordinatorAddr, ethClient)
+	registryCoordinator, err := regcoord.NewContractZrRegistryCoordinator(registryCoordinatorAddr, ethClient)
 	if err != nil {
 		return nil, types.WrapError(errors.New("Failed to create RegistryCoordinator contract"), err)
 	}
@@ -189,6 +190,7 @@ func (w *AvsRegistryChainWriter) RegisterOperatorInQuorumWithAVSRegistryCoordina
 	operatorToAvsRegistrationSigSalt [32]byte,
 	operatorToAvsRegistrationSigExpiry *big.Int,
 	blsKeyPair *bls.KeyPair,
+	validatorAddr string,
 	quorumNumbers types.QuorumNums,
 	socket string,
 ) (*gethtypes.Receipt, error) {
@@ -245,6 +247,7 @@ func (w *AvsRegistryChainWriter) RegisterOperatorInQuorumWithAVSRegistryCoordina
 		noSendTxOpts,
 		quorumNumbers.UnderlyingType(),
 		socket,
+		validatorAddr,
 		pubkeyRegParams,
 		operatorSignatureWithSaltAndExpiry,
 	)

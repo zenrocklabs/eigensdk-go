@@ -16,12 +16,12 @@ import (
 
 type AvsRegistrySubscriber interface {
 	SubscribeToNewPubkeyRegistrations() (chan *blsapkreg.ContractBLSApkRegistryNewPubkeyRegistration, event.Subscription, error)
-	SubscribeToOperatorSocketUpdates() (chan *regcoord.ContractRegistryCoordinatorOperatorSocketUpdate, event.Subscription, error)
+	SubscribeToOperatorSocketUpdates() (chan *regcoord.ContractZrRegistryCoordinatorOperatorSocketUpdate, event.Subscription, error)
 }
 
 type AvsRegistryChainSubscriber struct {
 	logger         logging.Logger
-	regCoord       regcoord.ContractRegistryCoordinatorFilters
+	regCoord       *regcoord.ContractZrRegistryCoordinator
 	blsApkRegistry blsapkreg.ContractBLSApkRegistryFilters
 }
 
@@ -30,7 +30,7 @@ var _ AvsRegistrySubscriber = (*AvsRegistryChainSubscriber)(nil)
 
 func NewAvsRegistryChainSubscriber(
 	logger logging.Logger,
-	regCoord regcoord.ContractRegistryCoordinatorFilters,
+	regCoord *regcoord.ContractZrRegistryCoordinator,
 	blsApkRegistry blsapkreg.ContractBLSApkRegistryFilters,
 ) (*AvsRegistryChainSubscriber, error) {
 	return &AvsRegistryChainSubscriber{
@@ -45,7 +45,7 @@ func BuildAvsRegistryChainSubscriber(
 	ethWsClient eth.Client,
 	logger logging.Logger,
 ) (*AvsRegistryChainSubscriber, error) {
-	regCoord, err := regcoord.NewContractRegistryCoordinator(regCoordAddr, ethWsClient)
+	regCoord, err := regcoord.NewContractZrRegistryCoordinator(regCoordAddr, ethWsClient)
 	if err != nil {
 		return nil, types.WrapError(errors.New("Failed to create RegistryCoordinator contract"), err)
 	}
@@ -71,8 +71,8 @@ func (s *AvsRegistryChainSubscriber) SubscribeToNewPubkeyRegistrations() (chan *
 	return newPubkeyRegistrationChan, sub, nil
 }
 
-func (s *AvsRegistryChainSubscriber) SubscribeToOperatorSocketUpdates() (chan *regcoord.ContractRegistryCoordinatorOperatorSocketUpdate, event.Subscription, error) {
-	operatorSocketUpdateChan := make(chan *regcoord.ContractRegistryCoordinatorOperatorSocketUpdate)
+func (s *AvsRegistryChainSubscriber) SubscribeToOperatorSocketUpdates() (chan *regcoord.ContractZrRegistryCoordinatorOperatorSocketUpdate, event.Subscription, error) {
+	operatorSocketUpdateChan := make(chan *regcoord.ContractZrRegistryCoordinatorOperatorSocketUpdate)
 	sub, err := s.regCoord.WatchOperatorSocketUpdate(
 		&bind.WatchOpts{}, operatorSocketUpdateChan, nil,
 	)
